@@ -1,8 +1,6 @@
 package com.ll.jump;
 
-
-import com.ll.jump.Question.entity.Question;
-import com.ll.jump.Question.repository.QuestionRepository;
+import com.ll.jump.Question.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,14 +11,14 @@ import java.time.LocalDateTime;
 public class SbbApplicationTests {
 
   @Autowired
-  private QuestionRepository questionRepository;
+  private QuestionService questionService;
 
   @Test
   void testJpa() {
-    Question q1 = new Question();
-    q1.setSubject("What is your name?");
-    q1.setContent("My name is John.");
-    q1.setCreateDate(LocalDateTime.now());
-    this.questionRepository.save(q1);
+    for (int i = 1; i <= 300; i++) {
+      String subject = String.format("테스트 데이터입니다:[%03d]", i);
+      String content = "내용무";
+      this.questionService.create(subject, content);
+    }
   }
 }

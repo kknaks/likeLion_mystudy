@@ -1,6 +1,7 @@
 package com.ll.jump.Question.entity;
 
 import com.ll.jump.Answer.entity.Answer;
+import com.ll.jump.user.entity.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +27,9 @@ public class Question {
 
   @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
   private List<Answer> answerList;
+
+  @ManyToOne
+  private SiteUser author;
+
+  private LocalDateTime modifyDate;
 }

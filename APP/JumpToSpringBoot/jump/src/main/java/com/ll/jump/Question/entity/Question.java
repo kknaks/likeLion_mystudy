@@ -1,5 +1,6 @@
-package com.ll.jump.entity;
+package com.ll.jump.Question.entity;
 
+import com.ll.jump.Answer.entity.Answer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,6 @@ public class Question {
 
   private LocalDateTime createDate;
 
-  @OneToMany
-  private List<Answer> answers;
+  @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+  private List<Answer> answerList;
 }

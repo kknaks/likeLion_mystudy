@@ -1,7 +1,6 @@
-package com.ll.jump.repository;
+package com.ll.jump.Answer.repository;
 
-import com.ll.jump.entity.Answer;
-import com.ll.jump.entity.Question;
+import com.ll.jump.Answer.entity.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {

@@ -1,7 +1,8 @@
 package com.ll.jump;
 
-import com.ll.jump.entity.Question;
-import com.ll.jump.repository.QuestionRepository;
+
+import com.ll.jump.Question.entity.Question;
+import com.ll.jump.Question.repository.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

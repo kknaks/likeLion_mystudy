@@ -30,7 +30,7 @@ public class ApiV1ArticleController {
     return articleList;
   }
 
-  @PostMapping("/{id}")
+  @GetMapping("/{id}")
   public ArticleDTO getArticle(
       @PathVariable("id") Long id
   ){
@@ -41,17 +41,31 @@ public class ApiV1ArticleController {
   }
 
   @PostMapping("")
-  public String create(ArticleDTO articleDTO){
+  public String create(
+      @RequestParam("subject") String subject,
+      @RequestParam("content") String content){
+    System.out.println(subject);
+    System.out.println(content);
     return "게시글 등록";
   }
 
   @PatchMapping("{id}")
-  public String modify(){
-    return "게시글 수정";
+  public String modify(
+      @PathVariable("id") Long id,
+      @RequestParam("subject") String subject,
+      @RequestParam("content") String content
+  ){
+    System.out.println(id);
+    System.out.println(subject);
+    System.out.println(content);
+    return String.format("%d번 %s: %s 게시글 수정",id,subject,content);
   }
 
   @DeleteMapping("{id}")
-  public String delete(){
-    return "게시글 삭제";
+  public String delete(
+      @PathVariable("id") Long id
+  ){
+    System.out.println(id);
+    return String.format("%d번 게시글 삭제",id);
   }
 }

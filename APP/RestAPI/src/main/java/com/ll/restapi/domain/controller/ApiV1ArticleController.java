@@ -1,9 +1,6 @@
 package com.ll.restapi.domain.controller;
 
-import com.ll.restapi.domain.dto.ArticleDTO;
-import com.ll.restapi.domain.dto.ArticleRequest;
-import com.ll.restapi.domain.dto.ArticleResponse;
-import com.ll.restapi.domain.dto.ArticlesResponse;
+import com.ll.restapi.domain.dto.*;
 import com.ll.restapi.domain.entity.Article;
 import com.ll.restapi.domain.service.ArticleService;
 import com.ll.restapi.global.rsData.RsData;
@@ -55,7 +52,7 @@ public class ApiV1ArticleController {
 
   @PostMapping("")
   public String create(
-      @Valid @RequestBody ArticleRequest articleRequest){
+      @Valid @RequestBody ArticleCreateRequest articleRequest){
     System.out.println(articleRequest.getSubject());
     System.out.println(articleRequest.getContent());
     return "게시글 등록";
@@ -64,13 +61,12 @@ public class ApiV1ArticleController {
   @PatchMapping("{id}")
   public String modify(
       @PathVariable("id") Long id,
-      @RequestParam("subject") String subject,
-      @RequestParam("content") String content
+      @RequestBody ArticleModifyRequest articleRequest
   ){
     System.out.println(id);
-    System.out.println(subject);
-    System.out.println(content);
-    return String.format("%d번 %s: %s 게시글 수정",id,subject,content);
+    System.out.println(articleRequest.getSubject());
+    System.out.println(articleRequest.getContent());
+    return String.format("%d번 %s: %s 게시글 수정",id,articleRequest.getSubject(),articleRequest.getContent());
   }
 
   @DeleteMapping("{id}")

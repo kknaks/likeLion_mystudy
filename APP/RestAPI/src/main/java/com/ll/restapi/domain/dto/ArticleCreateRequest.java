@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class ArticleRequest {
+public class ArticleCreateRequest {
   @NotBlank
   private String subject;
 

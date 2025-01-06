@@ -31,10 +31,13 @@ public class ApiV1ArticleController {
   }
 
   @PostMapping("/{id}")
-  public String getArticle(
+  public ArticleDTO getArticle(
       @PathVariable("id") Long id
   ){
-    return "단건조회";
+
+    ArticleDTO articleDTO = new ArticleDTO(new Article("suject4", "content4"));
+
+    return articleDTO;
   }
 
   @PostMapping("")

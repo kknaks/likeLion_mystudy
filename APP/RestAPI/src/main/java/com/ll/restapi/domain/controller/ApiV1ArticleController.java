@@ -5,20 +5,27 @@ import com.ll.restapi.domain.entity.Article;
 import com.ll.restapi.domain.repository.ArticleRepository;
 import com.ll.restapi.domain.service.ArticleService;
 import com.ll.restapi.global.rsData.RsData;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-@RequestMapping("/api/v1/articles")
+@RequestMapping(value = "/api/v1/articles", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "ApiV1ArticleController", description = "게시글 CRUD API")
 public class ApiV1ArticleController {
   private final ArticleService articleService;
 
   @GetMapping("")
+  @Operation(summary = "게시글 다건 조회")
   public RsData<ArticlesResponse> list(){
     List<ArticleDTO> articleList = articleService.getList();
 
@@ -30,6 +37,7 @@ public class ApiV1ArticleController {
   }
 
   @GetMapping("/{id}")
+  @Operation(summary = "게시글 단건 조회")
   public RsData<ArticleResponse> getArticle(
       @PathVariable("id") Long id
   ){
@@ -45,6 +53,7 @@ public class ApiV1ArticleController {
   }
 
   @PostMapping("")
+  @Operation(summary = "게시글 등록")
   public RsData create(
       @Valid @RequestBody ArticleCreateRequest articleRequest){
     Article article = articleService.write(articleRequest.getSubject(), articleRequest.getContent());
@@ -57,6 +66,7 @@ public class ApiV1ArticleController {
   }
 
   @PatchMapping("{id}")
+  @Operation(summary = "게시글 수정")
   public RsData modify(
       @PathVariable("id") Long id,
       @RequestBody ArticleModifyRequest articleRequest
@@ -73,6 +83,7 @@ public class ApiV1ArticleController {
   }
 
   @DeleteMapping("{id}")
+  @Operation(summary = "게시글 삭제")
   public RsData delete(
       @PathVariable("id") Long id
   ){

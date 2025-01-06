@@ -1,8 +1,13 @@
 package com.ll.restapi.domain.controller;
 
 import com.ll.restapi.domain.dto.ArticleDTO;
+import com.ll.restapi.domain.dto.ArticleRequest;
+import com.ll.restapi.domain.dto.ArticleResponse;
+import com.ll.restapi.domain.dto.ArticlesResponse;
 import com.ll.restapi.domain.entity.Article;
 import com.ll.restapi.domain.service.ArticleService;
+import com.ll.restapi.global.rsData.RsData;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +21,7 @@ public class ApiV1ArticleController {
   private final ArticleService articleService;
 
   @GetMapping("")
-  public List<ArticleDTO> list(){
+  public RsData<ArticlesResponse> list(){
     List<ArticleDTO> articleList = new ArrayList<>();
     Article article1 = new Article("suject1", "content1");
     articleList.add(new ArticleDTO(article1));
@@ -27,25 +32,32 @@ public class ApiV1ArticleController {
     Article article3 = new Article("suject3", "content3");
     articleList.add(new ArticleDTO(article3));
 
-    return articleList;
+    return RsData.of(
+        "200",
+        "게시글 목록 조회 성공",
+        new ArticlesResponse(articleList)
+    );
   }
 
   @GetMapping("/{id}")
-  public ArticleDTO getArticle(
+  public RsData<ArticleResponse> getArticle(
       @PathVariable("id") Long id
   ){
 
     ArticleDTO articleDTO = new ArticleDTO(new Article("suject4", "content4"));
 
-    return articleDTO;
+    return RsData.of(
+        "200",
+        "게시글 조회 성공",
+        new ArticleResponse(articleDTO)
+    );
   }
 
   @PostMapping("")
   public String create(
-      @RequestParam("subject") String subject,
-      @RequestParam("content") String content){
-    System.out.println(subject);
-    System.out.println(content);
+      @Valid @RequestBody ArticleRequest articleRequest){
+    System.out.println(articleRequest.getSubject());
+    System.out.println(articleRequest.getContent());
     return "게시글 등록";
   }
 

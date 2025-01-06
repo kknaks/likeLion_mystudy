@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ArticleDTO {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private final Long id;
   private final String subject;
   private final String content;

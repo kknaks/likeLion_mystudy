@@ -1,12 +1,16 @@
 package com.ll.chatApp.domain.chat.chatMessage.service;
 
 
+import com.ll.chatApp.domain.chat.chatMessage.dto.ChatMessageRequest;
 import com.ll.chatApp.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.chatApp.domain.chat.chatMessage.repository.ChatMessageRepository;
 import com.ll.chatApp.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.chatApp.domain.chat.chatRoom.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,17 +19,21 @@ public class ChatMessageService {
   private final ChatMessageRepository chatMessageRepository;
   private final ChatRoomRepository chatRoomRepository;
 
-  public void write(ChatRoom chatRoom, String witerName, String content) {
+  public List<ChatMessage> getList(Long roomId, long afterChatMessageId) {
+    if (afterChatMessageId == -1) {
+      return chatMessageRepository.findByChatRoomId(roomId);
+    }
+    return chatMessageRepository.findByChatRoomIdAndIdGreaterThan(roomId, afterChatMessageId);
+  }
+
+  public void save(Long roomId, ChatMessageRequest chatMessageRequest) {
+    ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElse(null);
     ChatMessage chatMessage = ChatMessage.builder()
         .chatRoom(chatRoom)
-        .writerName(witerName)
-        .content(content)
+        .writerName(chatMessageRequest.getWriterName())
+        .content(chatMessageRequest.getContent())
         .build();
 
     chatMessageRepository.save(chatMessage);
-  }
-
-  public void getList(Long roomId, long afterChatMessageId) {
-
   }
 }

@@ -1,5 +1,6 @@
 package com.ll.chatApp.global.initData;
 
+import com.ll.chatApp.domain.chat.chatMessage.dto.ChatMessageRequest;
 import com.ll.chatApp.domain.chat.chatMessage.service.ChatMessageService;
 import com.ll.chatApp.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.chatApp.domain.chat.chatRoom.service.ChatRoomService;
@@ -23,7 +24,8 @@ public class NotProd {
       ChatRoom chatRoom3 = chatRoomService.make("여가");
 
       IntStream.rangeClosed(1,100).forEach(num->{
-        chatMessageService.write(chatRoom1,"kknaks","message"+num);
+        ChatMessageRequest chatMessageRequest = new ChatMessageRequest("kknaks","message"+num);
+        chatMessageService.save(chatRoom1.getId(),chatMessageRequest);
       });
     };
   }

@@ -12,28 +12,22 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ChatRoomService {
+  private final ChatRoomRepository chatRoomRepository;
 
-  private final ChatRoomRepository charRoomRepository;
-
-  public ChatRoom make(String name) {
+  public ChatRoom create(String name) {
     ChatRoom chatRoom = ChatRoom.builder()
-            .name(name)
-            . build();
+        .name(name)
+        .build();
 
-    charRoomRepository.save(chatRoom);
+    chatRoomRepository.save(chatRoom);
+
     return chatRoom;
   }
 
-  public List<ChatRoom> getList() {
-    return charRoomRepository.findAll();
+  public  List<ChatRoom>  getAll() {
+    return chatRoomRepository.findAll();
   }
-
-  public ChatRoom get(Long id) {
-    Optional<ChatRoom> chatRoom = charRoomRepository.findById(id);
-
-    if (chatRoom.isPresent()){
-      return chatRoom.get();
-    }
-    return null;
+  public ChatRoom getChatRoom(Long roomId) {
+    return chatRoomRepository.findById(roomId).get();
   }
 }

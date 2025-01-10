@@ -15,23 +15,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ChatMessageService {
-
   private final ChatMessageRepository chatMessageRepository;
-  private final ChatRoomRepository chatRoomRepository;
 
-  public List<ChatMessage> getList(Long roomId, long afterChatMessageId) {
-    if (afterChatMessageId == -1) {
-      return chatMessageRepository.findByChatRoomId(roomId);
-    }
-    return chatMessageRepository.findByChatRoomIdAndIdGreaterThan(roomId, afterChatMessageId);
-  }
-
-  public void save(Long roomId, ChatMessageRequest chatMessageRequest) {
-    ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElse(null);
+  public void create(ChatRoom chatRoom, String writerName, String content) {
     ChatMessage chatMessage = ChatMessage.builder()
         .chatRoom(chatRoom)
-        .writerName(chatMessageRequest.getWriterName())
-        .content(chatMessageRequest.getContent())
+        .writerName(writerName)
+        .content(content)
         .build();
 
     chatMessageRepository.save(chatMessage);

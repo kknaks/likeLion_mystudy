@@ -19,7 +19,7 @@ public class ChatController {
   }
 
   @GetMapping
-  public Map<String, String>  chate(@RequestBody String message){
+  public Map<String, String> chate(@RequestBody String message){
     Map<String, String> response = new HashMap<>();
 
     String openAiResponse = openAiChatModel.call(message);
